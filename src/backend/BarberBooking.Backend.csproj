@@ -57,6 +57,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -91,6 +92,9 @@
     <Compile Include="Api\Controllers\AppointmentsController.cs" />
     <Compile Include="Api\Controllers\ServicesController.cs" />
     <Compile Include="Api\Models\ApiError.cs" />
+    <Compile Include="Api\Filters\GlobalApiExceptionFilter.cs" />
+    <Compile Include="Api\Handlers\RateLimitHandler.cs" />
+    <Compile Include="Api\Handlers\RequestLoggingHandler.cs" />
     <Compile Include="App_Start\DependencyConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -109,6 +113,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Composition\ApiDependencyResolver.cs" />
+    <Compile Include="Infrastructure\Caching\MemoryResponseCache.cs" />
+    <Compile Include="Infrastructure\Observability\StructuredLogger.cs" />
     <Compile Include="Infrastructure\Persistence\BarberBookingDbContext.cs" />
     <Compile Include="Infrastructure\Persistence\BarberBookingDatabaseInitializer.cs" />
     <Compile Include="Infrastructure\Repositories\AppointmentRepository.cs" />

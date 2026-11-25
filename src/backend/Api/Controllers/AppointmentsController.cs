@@ -19,9 +19,9 @@ namespace BarberBooking.Backend.Api.Controllers
         }
 
         [HttpGet, Route("")]
-        public async Task<IHttpActionResult> Get(CancellationToken cancellationToken)
+        public async Task<IHttpActionResult> Get(int page = 1, int pageSize = 20, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Ok(await _applicationService.ListAppointmentsAsync(cancellationToken));
+            return Ok(await _applicationService.ListAppointmentsAsync(page, pageSize, cancellationToken));
         }
 
         [HttpPost, Route("")]

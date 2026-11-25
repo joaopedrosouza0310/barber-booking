@@ -8,7 +8,7 @@ namespace BarberBooking.Backend.Application.Appointments
     public interface IAppointmentApplicationService
     {
         Task<ServiceListResponse> ListServicesAsync(CancellationToken cancellationToken);
-        Task<AppointmentListResponse> ListAppointmentsAsync(CancellationToken cancellationToken);
+        Task<AppointmentListResponse> ListAppointmentsAsync(int page, int pageSize, CancellationToken cancellationToken);
         Task<ApplicationResult<AppointmentResponse>> CreateAsync(CreateAppointmentRequest request, CancellationToken cancellationToken);
         Task<ApplicationResult<bool>> CancelAsync(Guid appointmentId, CancellationToken cancellationToken);
     }

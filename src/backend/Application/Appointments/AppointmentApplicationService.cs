@@ -34,12 +34,19 @@ namespace BarberBooking.Backend.Application.Appointments
             };
         }
 
-        public async Task<AppointmentListResponse> ListAppointmentsAsync(CancellationToken cancellationToken)
+        public async Task<AppointmentListResponse> ListAppointmentsAsync(int page, int pageSize, CancellationToken cancellationToken)
         {
             var appointments = await _appointmentRepository.ListAsync(cancellationToken);
+            page = Math.Max(1, page);
+            pageSize = Math.Max(1, Math.Min(100, pageSize));
+            var totalItems = appointments.Count;
             return new AppointmentListResponse
             {
-                Items = appointments.Select(MapAppointment).ToArray()
+                Items = appointments.Skip((page - 1) * pageSize).Take(pageSize).Select(MapAppointment).ToArray(),
+                Page = page,
+                PageSize = pageSize,
+                TotalItems = totalItems,
+                TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize)
             };
         }
 

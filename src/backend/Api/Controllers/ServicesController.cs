@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using BarberBooking.Backend.Application.Appointments;
+using BarberBooking.Backend.Infrastructure.Caching;
 
 namespace BarberBooking.Backend.Api.Controllers
 {
@@ -19,7 +20,11 @@ namespace BarberBooking.Backend.Api.Controllers
         [HttpGet, Route("")]
         public async Task<IHttpActionResult> Get(CancellationToken cancellationToken)
         {
-            return Ok(await _applicationService.ListServicesAsync(cancellationToken));
+            var response = await MemoryResponseCache.GetOrCreateAsync(
+                "barber-services-v1",
+                TimeSpan.FromMinutes(5),
+                () => _applicationService.ListServicesAsync(cancellationToken));
+            return Ok(response);
         }
     }
 }

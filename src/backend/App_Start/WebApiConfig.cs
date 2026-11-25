@@ -1,6 +1,8 @@
 using System.Web.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using BarberBooking.Backend.Api.Filters;
+using BarberBooking.Backend.Api.Handlers;
 
 namespace BarberBooking.Backend.App_Start
 {
@@ -8,6 +10,9 @@ namespace BarberBooking.Backend.App_Start
     {
         public static void Register(HttpConfiguration configuration)
         {
+            configuration.MessageHandlers.Add(new RequestLoggingHandler());
+            configuration.MessageHandlers.Add(new RateLimitHandler());
+            configuration.Filters.Add(new GlobalApiExceptionFilter());
             configuration.MapHttpAttributeRoutes();
             configuration.Formatters.Remove(configuration.Formatters.XmlFormatter);
             configuration.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
